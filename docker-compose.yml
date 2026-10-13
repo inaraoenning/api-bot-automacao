@@ -1,0 +1,15 @@
+services:
+  bot:
+    build: .
+    container_name: shopee-promo-bot
+    env_file: .env
+    environment:
+      # Sessao persistida no volume abaixo (nao pede login a cada restart)
+      TELEGRAM_SESSION_NAME: /app/sessions/shopee_bot_session
+    volumes:
+      - ./sessions:/app/sessions
+      - ./logs:/app/logs
+    restart: unless-stopped
+    # Necessarios para o primeiro login interativo do Telethon
+    stdin_open: true
+    tty: true
